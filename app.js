@@ -2,6 +2,9 @@ import express from "express";
 import morgan from "morgan";
 import authRouter from "./routers/authRouter.js";
 import voteRouter from "./routers/voteRouter.js";
+import adminRouter from "./routers/adminRouter.js";
+import songRouter from "./routers/songRouter.js";
+import messageRouter from "./routers/messageRouter.js";
 import AppError from "./utils/appError.js";
 import globalErrorHandler from "./controllers/globalError.js";
 
@@ -18,6 +21,9 @@ if ((process.env.NODE_ENV || "").trim() === "development") {
 // 2)ROUTES
 app.use('/api/v1/fresherParty', authRouter);
 app.use('/api/v1/fresherParty/vote', voteRouter);
+app.use('/api/v1/fresherParty/admin', adminRouter);
+app.use('/api/v1/fresherParty/songs', songRouter);
+app.use('/api/v1/fresherParty/messages', messageRouter);
 
 // If route not found
 app.all('/{*any}', (req, res, next) => {
