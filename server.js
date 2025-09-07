@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 import { app } from "./app.js";
 import { createServer } from 'http';
 import { Server } from 'socket.io';
-import { setupSocketHandlers } from './utils/socketHandlers.js';
+import { setupSocketHandlers } from "./utils/socketHandlers.js";
 
 
 console.log(app.get('env'));
