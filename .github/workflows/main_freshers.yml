@@ -50,10 +50,7 @@ jobs:
       
       - name: Login to Azure
         uses: azure/login@v2
-        with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_EC14EA51457F448E9928CEFB37C3E710 }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_146D433FCCC341D3A4A67631BF66C61B }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_37B29DE33C984C5EA64708AFE32B9B1A }}
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       - name: 'Deploy to Azure Web App'
         id: deploy-to-webapp
@@ -62,4 +59,6 @@ jobs:
           app-name: 'freshers'
           slot-name: 'Production'
           package: .
+
           
+
