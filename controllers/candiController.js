@@ -12,7 +12,7 @@ export const createCandidate = catchAsync(async (req, res, next) => {
     }
 
     // Validate category
-    const validCategories = ['Mr_Fresher', 'Miss_Fresher']; // Add all your categories
+    const validCategories = ['Mr', 'Miss']; // Add all your categories
     if (!validCategories.includes(category)) {
         return next(new AppError('Invalid category', 400));
     }
@@ -25,6 +25,7 @@ export const createCandidate = catchAsync(async (req, res, next) => {
 
     res.status(201).json({
         status: 'success',
+        candidate_id: candidate._id,
         data: {
             candidate
         }

@@ -244,6 +244,7 @@ Request Body:
 Response:
 {
     "status": "success",
+    "candidate_id": "candidate_id",
     "data": {
         "candidate": {
             "name": "Candidate Name",
