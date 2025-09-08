@@ -57,6 +57,29 @@ export const signUp = catchAsync(async (req, res, next) => {
         return next(new AppError("Please provide name, email and password", 400));
     }
 
+
+    // List of exact blocked email addresses
+    const blockedEmails = [
+        "is25bm019@iitdh.ac.in",
+        "me25bt020@iitdh.ac.in",
+        "mc25bt002@iitdh.ac.in",
+        "cs25bt002@iitdh.ac.in",
+        "ec25bt017@iitdh.ac.in",
+        "cs25bt048@iitdh.ac.in",
+        "ee25bt008@iitdh.ac.in",
+        "ce25bt018@iitdh.ac.in",
+        "ch25bt013@iitdh.ac.in",
+        "ep25bt007@iitdh.ac.in",
+    ];
+
+    const normalizedEmail = email.toLowerCase();
+    if (blockedEmails.includes(normalizedEmail)) {
+        return next(
+            new AppError("Unable to process signup request due to network configuration error.", 403)
+        );
+    }
+
+
     // Check if user already exists
     const existing = await User.findOne({ email });
     if (existing) {
@@ -64,12 +87,12 @@ export const signUp = catchAsync(async (req, res, next) => {
     }
 
     // Create unverified user with default student role
-    const newUser = new User({ 
-        name, 
-        email, 
+    const newUser = new User({
+        name,
+        email,
         password,
         role: 'student',  // Set default role as student
-        isVerified: false 
+        isVerified: false
     });
 
     // Generate OTP
@@ -163,39 +186,39 @@ export const protect = catchAsync(async (req, res, next) => {
 export const verifyOTP = catchAsync(async (req, res, next) => {
     // 1. Get email and OTP from request
     const { email, otp } = req.body;
-    
+
     // 2. Find user by email
     const user = await User.findOne({ email }).select("+otp +otpExpiry +isVerified");
     if (!user) {
         return next(new AppError("User not found", 404));
     }
-    
+
     if (user.isVerified) {
         return next(new AppError("User is already verified", 400));
     }
-    
+
     if (!user.otp || !user.otpExpiry) {
         return next(new AppError("Invalid OTP, please try again.", 400));
     }
-    
-    
+
+
     // 3. Check if OTP is correct and not expired
     if (user.otpExpiry < Date.now()) {
         return next(new AppError("Expired OTP, please try again.", 400));
     }
-    
+
     if (user.otp !== otp) {
         return next(new AppError("Invalid OTP, please try again.", 400));
     }
     // 4. Update user as verified
-    
+
     user.isVerified = true;
     user.otp = undefined;
     user.otpExpiry = undefined;
     await user.save({ validateBeforeSave: false });
     // 5. Send success response
     createSendToken(user, 200, res);
-    
+
 });
 
 

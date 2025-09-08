@@ -6,11 +6,19 @@ const voteSchema = new mongoose.Schema({
         ref:"User",
         required: true
     },
+
+    user_name: {
+        type: String,   
+        required: true
+    },
+
     candidate:{
         type: mongoose.Schema.ObjectId,
         ref:"Candidate",
         required: true
     },
+
+    
     category:{
         type:String,
         require:[true , 'category required for vote!']

@@ -21,6 +21,7 @@ export const giveVote = catchAsync(async (req, res, next) => {
     try {
         await Vote.create({
             user: userId,
+            user_name: req.user.name,
             candidate: candidate._id,
             category: candidate.category
         });
@@ -46,6 +47,7 @@ export const giveVote = catchAsync(async (req, res, next) => {
     res.status(200).json({
         status: "success",
         message: "Vote registered successfully ✅",
+        votedBy: req.user.name, // include user who casted the vote 
         candidate: {
             id: candidate._id,
             name: candidate.name,
@@ -78,7 +80,7 @@ export const getCategoryResults = catchAsync(async (req, res, next) => {
     const { category } = req.params;
 
     // Validate category
-    const validCategories = ['Mr_Fresher', 'Miss_Fresher']; // Add all your categories
+    const validCategories = ['Mr', 'Miss']; // Add all your categories
     if (!validCategories.includes(category)) {
         return next(new AppError('Invalid category', 400));
     }

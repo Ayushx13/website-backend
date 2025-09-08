@@ -44,16 +44,6 @@ const userSchema = new mongoose.Schema({
         default: 'student'
     },
 
-    hasVotedMr: {
-        type: Boolean,
-        default: false
-    },
-
-    hasVotedMiss: {
-        type: Boolean,
-        default: false
-    },
-
     otp: {
         type: String
     },
