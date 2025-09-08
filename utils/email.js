@@ -23,7 +23,7 @@ export const sendOTPEmail = async (email, otp) => {
     try {
         await transporter.sendMail({
             from: {
-                name: "IIT Dharwad Fresher Party",
+                name: "Ayush Raj",
                 address: process.env.GMAIL_APP_USER
             },
             to: email,
