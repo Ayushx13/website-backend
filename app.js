@@ -19,6 +19,10 @@ if ((process.env.NODE_ENV || "").trim() === "development") {
 }
 
 // 2)ROUTES
+app.get('/', (req, res) => {
+  res.send("hello from the server");
+});
+
 app.use('/api/v1/fresherParty', authRouter);
 app.use('/api/v1/fresherParty/vote', voteRouter);
 app.use('/api/v1/fresherParty/admin', adminRouter);
