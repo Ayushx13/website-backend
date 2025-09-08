@@ -31,9 +31,10 @@ const createSendToken = (user, statusCode, res) => {
     // remove password before sending
     user.password = undefined;
 
-    // Send response with minimal user info
+    // Send response with token and minimal user info
     res.status(statusCode).json({
         status: "success",
+        token,
         data: {
             user: {
                 name: user.name,
@@ -138,7 +139,7 @@ export const protect = catchAsync(async (req, res, next) => {
         return next(new AppError("Invalid or expired token. Please log in again.", 401));
     }
 
-    // 3) Get user from payload (since deletion isn’t an option in your project)
+    // 3) Get user from payload 
     const currentUser = await User.findById(decoded.id);
 
     //3.a) check if user still exists

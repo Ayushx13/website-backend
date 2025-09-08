@@ -1,6 +1,13 @@
 import express from "express" ;
 import { protect , restrictTo } from "./../controllers/authController.js"; 
-import { createCandidate , getAllCandidates , getCandidatesByCategory } from "../controllers/candiController.js" ; 
+import { 
+    createCandidate, 
+    getAllCandidates, 
+    getCandidatesByCategory,
+    getCandidate,
+    updateCandidate,
+    deleteCandidate 
+} from "../controllers/candiController.js" ; 
 
 const router = express.Router() ;
 
@@ -12,9 +19,19 @@ router.use(restrictTo('admin')) ;
 router
     .route('/')
     .post(createCandidate) ; 
+
 router
     .route('/category/:category')
     .get(getCandidatesByCategory) ;
+
 router
     .route('/all')
     .get(getAllCandidates) ;   
+
+router
+    .route('/:id')
+    .get(getCandidate)
+    .patch(updateCandidate)
+    .delete(deleteCandidate);
+
+export default router ;
