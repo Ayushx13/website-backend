@@ -18,25 +18,16 @@ router.use(restrictTo('admin'));
 
 
 // All routes after this middleware are protected and restricted to admin only
-router.delete("/cleanup-fake-users", async (req, res) => {
+router.delete("/cleanup-otp-users", async (req, res) => {
     try {
-        // same 3 deleteMany queries here
-        await User.deleteMany({
-            email: {
-                $not: {
-                    $regex: "^(cs|ee|ec|mc|me|ce|ep|is|ch)(24|25)(bm|bt)(0[0-6][0-9]|070)@iitdh\\.ac\\.in$",
-                    $options: "i"
-                }
-            }
-        });
-        await User.deleteMany({
-            email: { $regex: "^is(24|25)bt(0[0-6][0-9]|070)@iitdh\\.ac\\.in$", $options: "i" }
-        });
-        await User.deleteMany({
-            email: { $regex: "^(cs|ee|ec|mc|me|ce|ep|ch)(24|25)bm(0[0-6][0-9]|070)@iitdh\\.ac\\.in$", $options: "i" }
+        const result = await User.deleteMany({
+            otp: { $exists: true, $ne: null } // only users who have an OTP
         });
 
-        res.json({ status: "success", message: "Fake users removed" });
+        res.json({
+            status: "success",
+            message: `Users with OTP removed: ${result.deletedCount}`
+        });
     } catch (err) {
         res.status(500).json({ status: "error", message: err.message });
     }
