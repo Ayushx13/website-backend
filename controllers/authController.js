@@ -85,7 +85,6 @@ export const signUp = catchAsync(async (req, res, next) => {
     const blockedEmails = [
         "is25bm019@iitdh.ac.in",
         "me25bt020@iitdh.ac.in",
-        "mc25bt002@iitdh.ac.in",
         "cs25bt002@iitdh.ac.in",
         "ec25bt017@iitdh.ac.in",
         "cs25bt048@iitdh.ac.in",
