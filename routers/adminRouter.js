@@ -25,10 +25,6 @@ router
     .get(getCandidatesByCategory) ;
 
 router
-    .route('/all')
-    .get(getAllCandidates) ;   
-
-router
     .route('/:id')
     .get(getCandidate)
     .patch(updateCandidate)
