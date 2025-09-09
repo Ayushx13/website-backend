@@ -15,20 +15,23 @@ const userSchema = new mongoose.Schema({
         lowercase: true,
         validate: {
             validator: function (value) {
-                // Example: is24bm003@iitdh.ac.in
-                const match = value.match(
-                    /^([a-z]{2})(\d{2})([a-z]{2})(\d{3})@iitdh\.ac\.in$/i
-                );
+                const regex = /^(cs|ee|ec|mc|me|ce|ep|is|ch)(24|25)(bm|bt)(0[0-6][0-9]|070)@iitdh\.ac\.in$/i;
+                const match = value.match(regex);
+                if (!match) return false;
 
-                if (!match) return false; // wrong format
+                const branch = match[1].toLowerCase();
+                const course = match[3].toLowerCase();
 
-                // Extract admission year
-                const year = parseInt(match[2], 10);
-                return year === 24 || year === 25;
+                // Extra rule: only "is" can have "bm", others must have "bt"
+                if (branch === "is" && course !== "bm") return false;
+                if (branch !== "is" && course !== "bt") return false;
+
+                return true;
             },
             message:
-                "Only IIT Dharwad 1st and 2nd year students (batch 2024 & 2025) can register",
-        },
+                "Only IIT Dharwad 1st & 2nd year students (batch 2024 & 2025) with valid branch/code (is+bm or others+bt, roll 001–070) can register",
+        }
+
     },
 
     password: {
@@ -56,7 +59,7 @@ const userSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     }
-    
+
 });
 
 
