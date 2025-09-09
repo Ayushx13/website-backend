@@ -46,7 +46,19 @@ const createSendToken = (user, statusCode, res) => {
     });
 };
 
+const isValidCollegeEmail = (email) => {
+    const regex = /^(cs|ee|ec|mc|me|ce|ep|is|ch)(24|25)(bm|bt)(0[0-6][0-9]|070)@iitdh\.ac\.in$/i;
+    const match = email.match(regex);
+    if (!match) return false;
 
+    const branch = match[1].toLowerCase();
+    const course = match[3].toLowerCase();
+
+    if (branch === "is" && course !== "bm") return false;
+    if (branch !== "is" && course !== "bt") return false;
+
+    return true;
+};
 
 export const signUp = catchAsync(async (req, res, next) => {
 
@@ -55,6 +67,17 @@ export const signUp = catchAsync(async (req, res, next) => {
     // Check if required fields are present
     if (!name || !email || !password) {
         return next(new AppError("Please provide name, email and password", 400));
+    }
+
+
+    // ✅ Validate email first
+    if (!isValidCollegeEmail(email)) {
+        return next(
+            new AppError(
+                "Invalid IIT Dharwad email. OTP will not be sent.",
+                400
+            )
+        );
     }
 
 
