@@ -47,7 +47,7 @@ const createSendToken = (user, statusCode, res) => {
 };
 
 const isValidCollegeEmail = (email) => {
-    const regex = /^(cs|ee|ec|mc|me|ce|ep|is|ch)(24|25)(bm|bt)(0[0-6][0-9]|070)@iitdh\.ac\.in$/i;
+    const regex = /^(cs|ee|ec|mc|me|ce|ep|is|ch)(22|24|25)(bm|bt)(0[0-6][0-9]|070)@iitdh\.ac\.in$/i;
     const match = email.match(regex);
     if (!match) return false;
 
