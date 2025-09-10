@@ -1,7 +1,7 @@
 import nodemailer from "nodemailer";
 import { generateOTPEmailTemplate } from "./emailTemplete.js";
 
-// 🔹 Optimized Fast Gmail Transporter
+// 🔹 Optimized Fast Gmail Transporter with Better Error Handling
 const transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
@@ -20,9 +20,18 @@ const transporter = nodemailer.createTransport({
     greetingTimeout: 5000, // 5 seconds
     socketTimeout: 30000, // 30 seconds
     
-    // Remove debug logging for production speed
+    // Enable debug for troubleshooting
     logger: false,
     debug: false
+});
+
+// Test transporter connection
+transporter.verify((error, success) => {
+    if (error) {
+        console.error("❌ Gmail transporter setup failed:", error);
+    } else {
+        console.log("✅ Gmail transporter is ready to send emails");
+    }
 });
 
 // 🔹 Fast OTP Sender Function
