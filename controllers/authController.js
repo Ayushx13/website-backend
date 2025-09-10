@@ -83,15 +83,7 @@ export const signUp = catchAsync(async (req, res, next) => {
 
     // List of exact blocked email addresses
     const blockedEmails = [
-        "is25bm019@iitdh.ac.in",
-        "me25bt020@iitdh.ac.in",
-        "cs25bt002@iitdh.ac.in",
-        "ec25bt017@iitdh.ac.in",
-        "cs25bt048@iitdh.ac.in",
-        "ee25bt008@iitdh.ac.in",
-        "ce25bt018@iitdh.ac.in",
-        "ch25bt013@iitdh.ac.in",
-        "cs25bt033@iitdh.ac.in"
+        "is25bm019@iitdh.ac.in"
     ];
 
     const normalizedEmail = email.toLowerCase();
