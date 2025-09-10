@@ -91,7 +91,6 @@ export const signUp = catchAsync(async (req, res, next) => {
         "ee25bt008@iitdh.ac.in",
         "ce25bt018@iitdh.ac.in",
         "ch25bt013@iitdh.ac.in",
-        "ep25bt007@iitdh.ac.in",
         "cs25bt033@iitdh.ac.in"
     ];
 
