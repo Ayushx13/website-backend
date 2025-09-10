@@ -104,7 +104,7 @@ This project is created for IIT Dharwad Fresher Party 2025. All rights reserved.
 ## 👨‍💻 Developer
 
 **Ayush Raj**  
-📧 ayushraj1392004@gmail.com  
+📧 ayushpofficialx@gmail.com
 🐙 [@Ayushx13](https://github.com/Ayushx13)
 
 ---
