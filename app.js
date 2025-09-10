@@ -9,8 +9,16 @@ import AppError from "./utils/appError.js";
 import globalErrorHandler from "./controllers/globalError.js";
 
 const app = express();
+
+
 app.use(express.json());
 
+app.use(cors({
+  origin: "https://freshers2025.tech",
+  methods: ["GET", "POST","DELETE","PATCH", "PUT", "OPTIONS"],
+  allowHeaders: ["Content-Type", "Authorization"],
+  credentials: true
+}))
 //1) Global MIDDLEWARE
 
 //Development logging
