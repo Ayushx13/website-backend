@@ -3,7 +3,7 @@ import User from "./../models/userModel.js";
 import catchAsync from "./../utils/catchAsync.js";
 import jwt from "jsonwebtoken";
 import { promisify } from "util";
-import { generateOTP, sendOTPEmail } from "../utils/email.js";
+import { generateOTP, sendOTPEmail } from "./../utils/email.js";
 
 
 const signToken = id => {
