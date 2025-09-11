@@ -38,6 +38,48 @@ router.delete("/cleanup-otp-users", async (req, res) => {
     }
 });
 
+// Route to delete users with expired OTPs (older than 5 minutes)
+router.delete("/cleanup-expired-otp-users", async (req, res) => {
+    try {
+        // Calculate 5 minutes ago
+        const fiveMinutesAgo = new Date(Date.now() - 5 * 60 * 1000);
+        
+        // Find users with expired OTPs
+        const expiredUsers = await User.find({
+            otpExpiry: { $lt: fiveMinutesAgo },
+            isVerified: false,
+            otp: { $exists: true, $ne: null }
+        });
+
+        // Delete users with expired OTPs
+        const result = await User.deleteMany({
+            otpExpiry: { $lt: fiveMinutesAgo },
+            isVerified: false,
+            otp: { $exists: true, $ne: null }
+        });
+
+        res.json({
+            status: "success",
+            message: `Users with expired OTP removed: ${result.deletedCount}`,
+            data: {
+                deletedCount: result.deletedCount,
+                expiredUsers: expiredUsers.map(user => ({
+                    name: user.name,
+                    email: user.email,
+                    otpExpiry: user.otpExpiry,
+                    minutesExpired: Math.floor((Date.now() - user.otpExpiry) / (1000 * 60))
+                }))
+            }
+        });
+    } catch (err) {
+        console.error("Error cleaning up expired OTP users:", err);
+        res.status(500).json({ 
+            status: "error", 
+            message: err.message 
+        });
+    }
+});
+
 // Route to verify all unverified accounts at once
 router.patch("/verify-all-users", async (req, res) => {
     try {
