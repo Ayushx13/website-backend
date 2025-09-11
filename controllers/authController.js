@@ -81,19 +81,6 @@ export const signUp = catchAsync(async (req, res, next) => {
     }
 
 
-    // List of exact blocked email addresses
-    const blockedEmails = [
-        "is25bm019@iitdh.ac.in"
-    ];
-
-    const normalizedEmail = email.toLowerCase();
-    if (blockedEmails.includes(normalizedEmail)) {
-        return next(
-            new AppError("Unable to process signup request due to network configuration error.", 403)
-        );
-    }
-
-
     // Check if user already exists
     const existing = await User.findOne({ email });
     if (existing) {
