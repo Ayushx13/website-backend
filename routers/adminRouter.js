@@ -9,6 +9,11 @@ import {
     updateCandidate,
     deleteCandidate
 } from "../controllers/candiController.js";
+import {
+    getEmailRotationStatus,
+    resetEmailRotation,
+    testGmailAccounts
+} from "../controllers/adminController.js";
 
 const router = express.Router();
 
@@ -84,6 +89,11 @@ router.patch("/verify-all-users", async (req, res) => {
         });
     }
 });
+
+// Gmail rotation management routes
+router.get('/email-rotation-status', getEmailRotationStatus);
+router.post('/reset-email-rotation', resetEmailRotation);
+router.get('/test-gmail-accounts', testGmailAccounts);
 
 
 router
