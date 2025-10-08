@@ -130,7 +130,8 @@ export const sendOTPEmail = async (email, otp, retries = 3) => {
                 html: htmlContent
             };
 
-            const info = currentAccount.transporter.sendMail(mailOptions);
+            // ⚠️ FIXED: Added await here
+            const info = await currentAccount.transporter.sendMail(mailOptions);
             
             console.log(`✅ OTP email sent successfully from ${currentAccount.user} to ${email} | Message ID: ${info.messageId}`);
             
