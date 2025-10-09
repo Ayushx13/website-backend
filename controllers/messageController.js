@@ -13,7 +13,8 @@ export const sendMessage = catchAsync(async (req, res, next) => {
 
     const anonymousMessage = await AnonymousMessage.create({
         user: req.user.id,
-        message
+        userName: req.user.name,
+        message: message.trim()
     });
 
     res.status(201).json({

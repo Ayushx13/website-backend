@@ -6,6 +6,10 @@ const anonymousMessageSchema = new mongoose.Schema({
         ref: 'User',
         required: [true, 'Message must belong to a user']
     },
+    userName: {
+        type: String,
+        required: [true, 'User name is required']
+    },
     message: {
         type: String,
         required: [true, 'Please provide the message!'],
